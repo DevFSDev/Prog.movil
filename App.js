@@ -3,124 +3,91 @@ import { useState } from "react";
 import {Center, Box, Heading, VStack, NativeBaseProvider, Button,} from "native-base";
 
 export default function App() {
-  let [number, setNumber] = useState("0");
-  let [oldNumber, setOldNumber] = useState();
-
-  
-  let [numberOne, setNumberOne] = useState();
-  let [numberTwo, setNumberTwo] = useState();
-  let [numberThree, setNumberThree] = useState();
-  let [calculo, setCalculo] = useState();
+  let [number, setNumber] = useState("");
+  let [numero01, setNumero01] = useState("");
+  let [numero02, setNumero02] = useState("");
+  let [calculo, setCalculo] = useState(0);
   let [operador, setOperador] = useState();
 
   // A IMPLEMENTAR POR EL ALUMNO //
 
 
   function handleEquals() {
-    setNumber(calculo);
+    if(operador == "+"){
+      let num1 = parseFloat(numero01);
+      let num2 = parseFloat(numero02);
+
+      let calculo = num1 + num2
+      setNumber(calculo);
+
+    }
+
+    else if(operador == "-"){
+      let num1 = parseFloat(numero01);
+      let num2 = parseFloat(numero02);
+
+      let calculo = num1 - num2
+      setNumber(calculo);
+    }
+    else if(operador == "x"){
+      let num1 = parseFloat(numero01);
+      let num2 = parseFloat(numero02);
+
+      let calculo = num1 * num2
+      setNumber(calculo);
+    }
+    else if(operador == "/"){
+      let num1 = parseFloat(numero01);
+      let num2 = parseFloat(numero02);
+
+      let calculo = num1 / num2
+      setNumber(calculo);
+    }
+
+    else{
+      setNumber(calculo);
+    }
+  
   }
-
-
 
 
   function handleNumber(e) {
 
+    let numeros1 = ""
+    let numeros2 = ""
 
-    if(number == numberTwo){
+    if(e == "+"){
+        sumar(number);
+    }
+    else if(e == "-"){
+      restar(number)
+    }
+    else if(e == "x"){
+      multiplicar(number)
+    }
+    else if(e == "/"){
+      dividir(number)
 
-      numberThree = e;
-      let numeros = numberTwo + numberThree;
-      let numerosFloat = parseFloat(numeros);
-      setNumber(numerosFloat )
-      numberTwo = numerosFloat
-      setNumberTwo(numberTwo);
-
-      if(operador == "+"){
-        sumar();
-      }
-      else if(operador == "-"){
-        restar()
-      }
-      else if(operador == "x"){
-        multiplicar()
-      }
-      else if(operador == "/"){
-        dividir()
-      }
-      
-      
     }
 
 
+    if(operador == undefined){
+      numeros1 = numeros1 += e
+      number += numeros1
 
+      setNumero01(number)
+      setNumber(number)
+    }
 
-    if (number == "0") {
+    else if((operador != undefined) && (e != "+") && (e != "-") && (e != "x") && (e != "/")){
+      numeros2 = numeros2 += e
+      number += numeros2
 
-        number = e; //Asigna a la variable number
-        setNumber(number); //Mostrar por pantalla
-        setOldNumber(number); //Asigna a la variable oldNUmber
-      
-        let numeros = number + oldNumber;
-        let numerosFloat = parseFloat(numeros);
-        setNumber(numerosFloat);
-        numberOne = numerosFloat;
-        setNumberOne(numberOne);
-        
-      
-        
-    } else {
-
-
-        if (operador == undefined) {
-          number = e;
-          let num1 = (oldNumber);
-          let num2 = (number);
-          let numeros = num1 + num2;
-          let numerosFloat = parseFloat(numeros);
-          setNumber(numerosFloat);
-          numberOne = numerosFloat;
-          setNumberOne(numberOne);
-
-
-        } else if(numberTwo == undefined) {
-
-          // TODO: crear primer digito del segundo sumando
-          
-          numberTwo = e;
-          let num1 = (numberTwo)
-          let num2 = (numberThree)
-          let numeros = num1 + num2;
-          let numerosFloat = parseFloat(numeros);
-          setNumber(numerosFloat )
-          numberTwo = numerosFloat
-          setNumberTwo(numberTwo);
-
-          if(operador == "+"){
-            sumar();
-          }
-          else if(operador == "-"){
-            restar()
-          }
-          else if(operador == "x"){
-            multiplicar()
-          }
-          else if(operador == "/"){
-            dividir()
-          }
-
-        }
-
-      }
+      setNumero02(number)
+      setNumber(number)
+    }
+    
   }
-
-
-
-  function signOnPress(e) {
-    let operador = e;
-    setOperador(operador);
-    console.log(operador);
-  }
-
 
 
   function handleInversa() {
@@ -151,75 +118,53 @@ export default function App() {
 
 
   function sumar() {
-    operador = "+";
-    setOperador(operador);
-    let suma = 0;
 
-    let num1 = parseFloat(numberOne);
-    let num2 = parseFloat(numberTwo);
-
-      suma = num1 + num2;
-      setCalculo(suma);
+      operador = "+"
+      setOperador(operador)
   
+      number = "";
+      setNumber(number)
+    }
 
-  }
+
 
   function restar(){
        
-      operador = "-"
-      setOperador(operador)
-      let resta = 0
 
-      let num1 = parseFloat(numberOne);
-      let num2 = parseFloat(numberTwo);
+    operador = "-"
+    setOperador(operador)
 
-      resta = num1 - num2
-      setCalculo(resta);
+    number = "";
+    setNumber(number)
 
   }
 
     function multiplicar(){
-       
+
       operador = "x"
       setOperador(operador)
-      let multiplicar = 0
-
-      let num1 = parseFloat(numberOne);
-      let num2 = parseFloat(numberTwo);
-
-      multiplicar = num1 * num2
-      setCalculo(multiplicar);
+  
+      number = "";
+      setNumber(number)
 
   }
 
     function dividir(){
-       
+  
+
       operador = "/"
       setOperador(operador)
-      let dividir = 0
-
-      let num1 = parseFloat(numberOne);
-      let num2 = parseFloat(numberTwo);
-
-      dividir = num1 / num2
-      setCalculo(dividir);
+  
+      number = "";
+      setNumber(number)
 
   }
 
   function resetOnPress() {
-    number = "0";
+    number = "";
     setNumber(number);
 
-    numberOne = undefined;
-    setNumberOne(numberOne)
-
-    numberTwo = undefined;
-    setNumberTwo(numberTwo);
-
-    oldNumber = undefined;
-    setOldNumber(oldNumber);
-
-    calculo = undefined;
+    calculo = 0;
     setCalculo(calculo);
 
     operador = undefined;
@@ -251,7 +196,7 @@ export default function App() {
                 <Button onPress={()=>handleRaiz("√")} size="20" mt="5" colorScheme="gray"> √ </Button>
               </View>
               <View style={{ padding: 2 }}>
-                <Button onPress={()=>signOnPress("/")} size="20" mt="5" colorScheme="gray"> / </Button>
+                <Button onPress={()=>handleNumber("/")} size="20" mt="5" colorScheme="gray"> / </Button>
               </View>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -265,7 +210,7 @@ export default function App() {
                 <Button onPress={()=>handleNumber("9")} size="20" mt="-1" colorScheme="blue"> 9 </Button>
               </View>
               <View style={{ padding: 2 }}>
-                <Button onPress={()=>signOnPress("x")} size="20" mt="-1" colorScheme="gray"> x </Button>
+                <Button onPress={()=>handleNumber("x")} size="20" mt="-1" colorScheme="gray"> x </Button>
               </View>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -279,7 +224,7 @@ export default function App() {
                 <Button onPress={()=>handleNumber("6")} size="20" mt="-1" colorScheme="blue"> 6 </Button>
               </View>
               <View style={{ padding: 2 }}>
-                <Button onPress={()=>signOnPress("-")} size="20" mt="-1" colorScheme="gray"> - </Button>
+                <Button onPress={()=>handleNumber("-")} size="20" mt="-1" colorScheme="gray"> - </Button>
               </View>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -293,7 +238,7 @@ export default function App() {
                 <Button onPress={()=>handleNumber("3")} size="20" mt="-1" colorScheme="blue"> 3 </Button>
               </View>
               <View style={{ padding: 2 }}>
-                <Button onPress={()=>signOnPress("+")} size="20" mt="-1" colorScheme="gray"> + </Button>
+                <Button onPress={()=>handleNumber("+")} size="20" mt="-1" colorScheme="gray"> + </Button>
               </View>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -304,7 +249,7 @@ export default function App() {
                 <Button onPress={()=>handleNumber("0")} size="20" mt="-1" colorScheme="blue"> 0 </Button>
               </View>
               <View style={{ padding: 2 }}>
-                <Button onPress={()=>handleOnPress(",")} size="20" mt="-1" colorScheme="gray"> , </Button>
+                <Button onPress={()=>handleNumber(".")} size="20" mt="-1" colorScheme="gray"> , </Button>
               </View>
               <View style={{ padding: 2 }}>
                 <Button onPress={()=>handleEquals("=")} size="20" mt="-1" colorScheme="gray"> = </Button>
@@ -314,5 +259,5 @@ export default function App() {
         </Box>
       </Center>
     </NativeBaseProvider>
-  )
+  )
 }
